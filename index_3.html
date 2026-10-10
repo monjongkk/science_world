@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+<title>SCIENCE WORLD ROBLOX 3D - โลกผจญภัยวิทยาศาสตร์</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<canvas id="game"></canvas>
+<canvas id="lbl"></canvas>
+
+<div class="hud" id="hudL">
+  <div id="zoneName">📍 ศูนย์บัญชาการ</div>
+  <div id="stats"></div>
+  <div id="objective"></div>
+</div>
+<div id="hudR">
+  <canvas id="mini" width="160" height="120"></canvas>
+  <button class="hb" id="bPause">⏸ หยุด (P)</button>
+  <button class="hb" id="bSound">🔊 เสียง</button>
+  <button class="hb" id="bQuest">📜 ภารกิจ (Q)</button>
+  <button class="hb" id="bMap">🗺️ แผนที่ (M)</button>
+</div>
+
+<div id="toast"></div>
+<div id="prompt"></div>
+<div id="dialog"><div id="dlgName"></div><div id="dlgText"></div><div id="dlgHint"></div></div>
+
+<button class="tb" id="bUp" data-k="up">▲</button>
+<button class="tb" id="bDown" data-k="down">▼</button>
+<button class="tb" id="bLeft" data-k="left">◀</button>
+<button class="tb" id="bRight" data-k="right">▶</button>
+<button class="tb" id="bRun" data-k="run">วิ่ง</button>
+<button class="tb" id="bJump" data-k="jump">กระโดด</button>
+<button class="tb" id="bAct" data-k="act">E</button>
+
+<!-- เมนูหลัก -->
+<div class="ov" id="ovMenu"><div class="card" style="text-align:center">
+  <div class="title">SCIENCE WORLD ROBLOX</div>
+  <div class="sub">โลกผจญภัยวิทยาศาสตร์ 3D</div>
+  <p>เดิน สำรวจ ทดลอง และทำภารกิจวิทยาศาสตร์ ในโลกบล็อกสุดสนุก</p>
+  <p id="mWho"></p>
+  <button class="btn g" id="bStart">▶ เริ่มผจญภัย</button>
+  <button class="btn" id="bSwitch">👤 ลงทะเบียน / เปลี่ยนผู้เล่น</button>
+  <button class="btn b" data-ov="ovHow">📖 วิธีเล่น</button>
+  <button class="btn p" data-ov="ovOut">🎯 ผลการเรียนรู้</button>
+  <button class="btn y" data-ov="ovCred">👩‍🏫 ผู้จัดทำ: ครูจองซ่า</button>
+</div></div>
+
+<div class="ov" id="ovHow"><div class="card">
+  <div class="title" style="font-size:24px">วิธีเล่น</div>
+  <ul>
+    <li>W A S D หรือปุ่มลูกศร: เดินตามทิศของกล้อง (W = ไปข้างหน้า)</li>
+    <li>ลากเมาส์หรือนิ้วบนหน้าจอเพื่อหมุนกล้องรอบตัวละคร</li>
+    <li>Shift: วิ่ง &nbsp;|&nbsp; Space: กระโดด (กระโดดได้เมื่ออยู่บนพื้น)</li>
+    <li>E: สำรวจวัตถุ ทดลอง และคุยกับ NPC (เดินเข้าใกล้ก่อน)</li>
+    <li>M: เปิดแผนที่ &nbsp;|&nbsp; Q: ดูรายการภารกิจ &nbsp;|&nbsp; P หรือ Esc: หยุดเกม</li>
+    <li>ด่าน 1 สำรวจวัสดุ จับคู่สมบัติ แล้วทำแบบทดสอบ เพื่อเปิดประตูไปหุบเขาแห่งเสียง</li>
+    <li>ด่าน 2 ทดลองเครื่องดนตรีแล้วทำแบบทดสอบ เพื่อเปิดประตูไปเกาะลึกลับแห่งหิน</li>
+    <li>ด่าน 3 สำรวจตัวอย่างหินแล้วทำแบบทดสอบ เพื่อจบการผจญภัย</li>
+  </ul>
+  <button class="btn" data-back>ปิด</button>
+</div></div>
+
+<div class="ov" id="ovOut"><div class="card">
+  <div class="title" style="font-size:24px">ผลการเรียนรู้</div>
+  <ul>
+    <li>ด่าน 1: ระบุสมบัติของวัสดุ ได้แก่ ความแข็ง ความยืดหยุ่น การดูดซึมน้ำ และความโปร่งใส</li>
+    <li>ด่าน 2: อธิบายได้ว่าเสียงเกิดจากการสั่นสะเทือน เสียงต้องอาศัยตัวกลาง และความดังกับความสูงต่ำของเสียงต่างกันอย่างไร</li>
+    <li>ด่าน 3: สังเกตและจำแนกหินแกรนิต หินปูน และหินทราย จากสี เนื้อหิน และเม็ดแร่</li>
+  </ul>
+  <button class="btn" data-back>ปิด</button>
+</div></div>
+
+<div class="ov" id="ovCred"><div class="card" style="text-align:center">
+  <div class="title" style="font-size:24px">เครดิต</div>
+  <p><b>SCIENCE WORLD ROBLOX</b></p>
+  <p>คำโปรย: โลกผจญภัยวิทยาศาสตร์</p>
+  <p>จัดทำโดย: <b>ครูจองซ่า</b></p>
+  <button class="btn" data-back>ปิด</button>
+</div></div>
+
+<!-- ลงทะเบียนผู้เล่น -->
+<div class="ov" id="ovRegister"><div class="card" style="text-align:center">
+  <div class="title" style="font-size:24px">📝 ลงทะเบียนผู้เล่น</div>
+  <p>ใส่ชื่อของคุณ เพื่อบันทึกความคืบหน้าและลงกระดานคะแนน</p>
+  <input id="rName" maxlength="20" placeholder="ชื่อของคุณ เช่น น้องมิ้ม" style="width:100%;padding:12px;font-size:17px;border-radius:12px;border:3px solid #7dd3fc;font-family:inherit;margin:6px 0">
+  <div id="rMsg" style="color:#d33;min-height:20px;font-size:14px"></div>
+  <button class="btn g" id="bRegister">✔ ลงทะเบียนและเริ่มเล่น</button>
+  <div id="rList"></div>
+  <button class="btn" data-back>ย้อนกลับ</button>
+</div></div>
+
+<!-- หยุดเกม -->
+<div class="ov" id="ovPause"><div class="card" style="text-align:center">
+  <div class="title" style="font-size:26px">⏸ พักเกม</div>
+  <button class="btn g" id="bResume">▶ เล่นต่อ</button>
+  <button class="btn b" id="bSoundP">🔊 เปิด/ปิดเสียง</button>
+  <button class="btn" id="bMenu">🏠 กลับหน้าเมนู</button>
+  <button class="btn p" id="bReset">♻️ เริ่มเกมใหม่</button>
+</div></div>
+
+<!-- ภารกิจ -->
+<div class="ov" id="ovQuest"><div class="card">
+  <div class="title" style="font-size:24px">📜 รายการภารกิจ</div>
+  <div id="questList"></div>
+  <button class="btn" id="bCloseQ">ปิด</button>
+</div></div>
+
+<!-- แผนที่ -->
+<div class="ov" id="ovMap"><div class="card" style="max-width:96vw;text-align:center">
+  <div class="title" style="font-size:22px">🗺️ แผนที่โลก</div>
+  <canvas id="bigMap" style="width:100%;border-radius:12px;background:#1d3557;margin-top:8px"></canvas>
+  <p style="font-size:13px;color:#555">จุดแดง = คุณ &nbsp; จุดชมพู = NPC &nbsp; จุดเหลือง = ของที่ยังไม่ได้สำรวจ</p>
+  <button class="btn" id="bCloseMap">ปิดแผนที่ (M)</button>
+</div></div>
+
+<!-- จับคู่วัสดุกับสมบัติ -->
+<div class="ov" id="ovMatch"><div class="card">
+  <div class="title" style="font-size:22px">🔗 จับคู่วัสดุกับสมบัติ</div>
+  <p>เลือกสมบัติที่ตรงกับวัสดุแต่ละชนิด แล้วกดตรวจคำตอบ</p>
+  <div id="mRows"></div>
+  <div class="fb" id="mFb"></div>
+  <button class="btn g" id="bMatchCheck">ตรวจคำตอบ</button>
+</div></div>
+
+<!-- แบบทดสอบ -->
+<div class="ov" id="ovQuiz"><div class="card">
+  <div id="qTitle" style="font-weight:bold;color:#e0561b;font-size:16px"></div>
+  <div id="qText" style="font-size:18px;font-weight:bold;margin:10px 0;line-height:1.6"></div>
+  <div id="qOpts"></div>
+  <div class="fb" id="qFb"></div>
+  <button class="btn g" id="bNext" style="display:none">ข้อถัดไป ▶</button>
+</div></div>
+
+<!-- จบเกม -->
+<div class="ov" id="ovEnd"><div class="card" style="text-align:center">
+  <div class="title">🏆 จบการผจญภัย!</div>
+  <div class="sub">ยินดีด้วย นักวิทยาศาสตร์ตัวน้อย</div>
+  <div class="stat" id="endStats"></div>
+  <div id="board"></div>
+  <button class="btn g" id="bEndMenu">🏠 กลับหน้าหลัก</button>
+  <button class="btn p" id="bEndAgain">♻️ เล่นใหม่ตั้งแต่ต้น</button>
+</div></div>
+
+<script src="game.js"></script>
+</body>
+</html>
